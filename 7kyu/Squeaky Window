@@ -1,0 +1,42 @@
+Your function takes in parameter an array of integers nums and a strictly-positive integer k.
+Imagine a sliding window of size k which is moving from left to right in the array. 
+You can only see the k elements that are in the window. 
+The sliding window moves right by one position until it is no longer possible to have k elements in the window. 
+You have to return an array of the maximums for each successive window, from left to right.
+
+Solution:
+
+List<int> slidingWindowMax(List<int> nums, int k) {
+  List<int> result = [];
+  final Deque<int> deque = Deque<int>();
+
+  for (int i = 0; i < nums.length; i++) {
+    // Remove elements from the deque that are outside the current window
+    while (deque.isNotEmpty && deque.first < i - k + 1) {
+      deque.removeFirst();
+    }
+
+    // Remove elements from the deque that are smaller than the current element
+    while (deque.isNotEmpty && nums[i] > nums[deque.last]) {
+      deque.removeLast();
+    }
+
+    // Add the current element to the deque
+    deque.addLast(i);
+
+    // Add the maximum element for the current window to the result
+    if (i >= k - 1) {
+      result.add(nums[deque.first]);
+    }
+  }
+
+  return result;
+}
+
+void main() {
+  final List<int> nums = [1, 3, -1, -3, 5, 3, 6, 7];
+  final int k = 3;
+
+  final List<int> result = slidingWindowMax(nums, k);
+  print(result); // Output: [3, 3, 5, 5, 6, 7]
+}
