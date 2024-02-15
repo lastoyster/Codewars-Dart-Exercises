@@ -1,0 +1,44 @@
+Problem:How many pages in a book?
+  Every book has n pages with page numbers 1 to n. The summary is made by adding up the number of digits of all page numbers.
+
+Task: Given the summary, find the number of pages n the book has.
+
+Example
+If the input is summary=25, then the output must be n=17: The numbers 1 to 17 have 25 digits in total: 1234567891011121314151617.
+Be aware that you'll get enormous books having up to 100.000 pages.
+
+Solution:
+int findNumberOfPages(int summary) {
+  int low = 1;
+  int high = summary;
+  
+  while (low < high) {
+    int mid = (low + high) ~/ 2;
+    int digits = calculateDigits(mid);
+    
+    if (digits < summary) {
+      low = mid + 1;
+    } else {
+      high = mid;
+    }
+  }
+  
+  return low;
+}
+
+int calculateDigits(int n) {
+  int digits = 0;
+  
+  while (n > 0) {
+    digits += n.toString().length;
+    n ~/= 10;
+  }
+  
+  return digits;
+}
+
+void main() {
+  int summary = 25;
+  int numberOfPages = findNumberOfPages(summary);
+  print('The book has $numberOfPages pages.');
+}
