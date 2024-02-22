@@ -1,0 +1,13 @@
+bool areConsecutive(List<int> arr, int a, int b) {
+  int indexA = arr.indexOf(a);
+  int indexB = arr.indexOf(b);
+  
+  // Check if the absolute difference between indices is equal to 1
+  return (indexA - indexB).abs() == 1;
+}
+
+void main() {
+  print(areConsecutive([1, 2, 3, 4, 5], 2, 3)); // Output: true
+  print(areConsecutive([1, 2, 3, 4, 5], 1, 3)); // Output: false
+  print(areConsecutive([5, 4, 3, 2, 1], 4, 5)); // Output: true
+}
